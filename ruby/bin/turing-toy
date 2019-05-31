@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+
+require 'turing_toy'
+
+toy = ARGV[0]
+input = ARGV[1]
+
+machine = TuringToy.const_get(toy).create(initial: input)
+puts machine.formatted_tape
+while machine.step
+  puts machine.formatted_tape
+end
+puts
+puts "Output: " + machine.output.to_s
