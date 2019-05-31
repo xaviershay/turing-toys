@@ -3,6 +3,12 @@ Turing Toys
 
 A collection of fun turing machines and assorted other computers.
 
-    machine = TuringToy::AddOne.create(initial: 3)
-    machine.run_with_trace
-    machine.output # => 4
+    > cd ruby
+    > bin/turing-toy AddOne 5
+    0:    1 0[1]
+    1:    1[0]0
+    2:    1 1[0]
+    2:    1 1 0[ ]
+    2:    1 1 0[!]
+
+    Output: 6
