@@ -4,6 +4,8 @@ require 'rantly/rspec_extensions'
 require 'turing_toy/add_one'
 require 'turing_toy/add_one_small'
 require 'turing_toy/add_one_small_generated'
+require 'turing_toy/three_two_reducer'
+
 
 shared_examples 'add one machine' do
   it 'adds one to positive integers' do
@@ -26,5 +28,9 @@ describe TuringToy::AddOneSmall do
 end
 
 describe TuringToy::AddOneSmallGenerated do
+  it_behaves_like 'add one machine'
+end
+
+describe TuringToy::ThreeTwoReducer.wrap(TuringToy::AddOne) do
   it_behaves_like 'add one machine'
 end
