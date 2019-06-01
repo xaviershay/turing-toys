@@ -3,6 +3,7 @@ require 'rantly/rspec_extensions'
 
 require 'turing_toy/add_one'
 require 'turing_toy/add_one_small'
+require 'turing_toy/add_one_small_generated'
 
 shared_examples 'add one machine' do
   it 'adds one to positive integers' do
@@ -21,5 +22,9 @@ describe TuringToy::AddOne do
 end
 
 describe TuringToy::AddOneSmall do
+  it_behaves_like 'add one machine'
+end
+
+describe TuringToy::AddOneSmallGenerated do
   it_behaves_like 'add one machine'
 end

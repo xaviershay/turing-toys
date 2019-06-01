@@ -15,7 +15,7 @@ module TuringToy
 
     def initialize(initial)
       @blank = " "
-      @state = 0
+      @state = 1
       @tape = encode(initial)
       @tape.unshift(@blank)
       @head = @tape.length - 1
@@ -23,18 +23,20 @@ module TuringToy
 
     def rules
       {
-        0 => {
-          "0" => ["1", R, 2],
-          "1" => ["0", L, 1],
+        1 => {
+          "0" => ["1", R, 3],
+          "1" => ["0", L, 2],
           " " => [HALT],
         },
-        1 => {
-          "0" => ["1", R, 2],
-          "1" => ["0", L, 1],
-          " " => ["1", R, 2],
-        },
+
         2 => {
-          "0" => ["0", R, 2],
+          "0" => ["1", R, 3],
+          "1" => ["0", L, 2],
+          " " => ["1", R, 3],
+        },
+
+        3 => {
+          "0" => ["0", R, 3],
           "1" => [HALT], # Should never occur
           " " => [HALT],
         }
