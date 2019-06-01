@@ -5,7 +5,7 @@ require 'rantly/shrinks'
 require 'turing_toy/add_one'
 require 'turing_toy/add_one_small'
 require 'turing_toy/add_one_small_generated'
-require 'turing_toy/three_two_reducer'
+require 'turing_toy/add_one_reduced'
 require 'turing_toy/turing_machine'
 
 
@@ -46,6 +46,6 @@ describe TuringToy::AddOneSmallGenerated do
   it_behaves_like 'add one machine'
 end
 
-describe TuringToy::ThreeTwoReducer.wrap(TuringToy::AddOne) do
-  it_behaves_like 'add one machine'
+describe TuringToy::AddOneReduced do
+  it_behaves_like 'add one machine new'
 end

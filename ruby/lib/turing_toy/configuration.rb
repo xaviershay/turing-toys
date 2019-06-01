@@ -32,6 +32,13 @@ module TuringToy
       raise NotImplementedError
     end
 
+    def name
+    end
+
+    def inspect
+      name ? name : super
+    end
+
     protected
 
     def parse_rules(string)

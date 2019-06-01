@@ -5,6 +5,10 @@ module TuringToy
   # represent the number as binary, and a blank. Read head starts on the least
   # significant bit.
   AddOne = Configuration.new do
+    def name
+      "TuringToy::AddOne"
+    end
+
     def rules
       parse_rules <<-EOS
         Q1: 0 1 R Q3
@@ -25,7 +29,7 @@ module TuringToy
     end
 
     def decode(tape)
-      tape[1..-2].join.to_i(2)
+      tape.reject {|x| [blank_symbol, halt_symbol].include?(x) }.join.to_i(2)
     end
 
     def encode(n)
