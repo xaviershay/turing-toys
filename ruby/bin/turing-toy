@@ -3,14 +3,34 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 
 require 'turing_toy'
+require 'turing_toy/turing_machine'
 
 toy = ARGV[0]
 input = ARGV[1]
 
-machine = TuringToy.const_get(toy).create(initial: input)
-puts machine.formatted_tape
-while machine.step
-  puts machine.formatted_tape
+config = TuringToy.const_get(toy)
+
+machine = TuringToy::TuringMachine.new(config: config, input: input)
+
+def format(machine)
+  tape, head, state = machine.tape, machine.head, machine.state
+
+  lhs = head > 0 ? tape[0..machine.head-1] : []
+  mhs = tape[head]
+  rhs = tape[head+1..-1]
+
+  buffer = StringIO.new("")
+  buffer.print state.to_s + ": "
+  buffer.print head == 0 ? "" : " "
+  buffer.print lhs.join(" ")
+  buffer.print "[%s]" % mhs
+  buffer.print rhs.join(" ")
+  buffer.string
+end
+
+loop do
+  puts format(machine)
+  break unless machine.step
 end
 puts
-puts "Output: " + machine.output.to_s
+puts "Output: %s" % machine.output
