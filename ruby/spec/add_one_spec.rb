@@ -39,7 +39,7 @@ describe TuringToy::AddOne do
 end
 
 describe TuringToy::AddOneSmall do
-  it_behaves_like 'add one machine'
+  it_behaves_like 'add one machine new'
 end
 
 describe TuringToy::AddOneSmallGenerated do

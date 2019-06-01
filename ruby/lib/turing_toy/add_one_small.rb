@@ -8,24 +8,20 @@ module TuringToy
   #     _ = 00
   #
   # The algorithm is the same as AddOne, adjusted for word size.
-  class AddOneSmall
-    HALT = "!"
-    L = -1
+  AddOneSmall = Configuration.new do
     R = 1
+    L = -1
 
-    attr_reader :tape, :head, :state, :blank
-
-    def self.create(initial: )
-      new(initial)
+    def initial_head_position(tape)
+      tape.length - 1
     end
 
-    def initialize(initial)
-      @blank = "0"
-      @state = 0
-      @tape = encode(initial)
-      @tape.unshift(@blank)
-      @tape.unshift(@blank)
-      @head = @tape.length - 1
+    def initial_state
+      0
+    end
+
+    def blank_symbol
+      0
     end
 
     def rules
@@ -46,14 +42,14 @@ module TuringToy
         },
         # MSB when LSB was 1. Skip over to next word (carry).
         2 => {
-          "0" => [HALT], # Should never happen
+          "0" => [halt_symbol], # Should never happen
           "1" => ["1", L, 0]
         },
 
         # LSB when incrementing
         3 => {
           "0" => ["1", L, 10],
-          "1" => [HALT]
+          "1" => [halt_symbol]
         },
 
         # MSB returning
@@ -63,7 +59,7 @@ module TuringToy
         },
         # LSB returning when MSB was 0.
         11 => {
-          "0" => [HALT],
+          "0" => [halt_symbol],
           "1" => ["1", R, 10]
         },
         # LSB returning when MSB was 1. Skip.
@@ -74,38 +70,8 @@ module TuringToy
       }
     end
 
-    def run
-      while step
-      end
-    end
-
-    def step
-      element = tape[head]
-
-      if element == HALT
-        return false
-      else
-        rule = rules.fetch(state).fetch(element)
-        tape[head] = rule[0]
-        if rule[1]
-          @head += rule[1]
-          @state = rule[2]
-        end
-      end
-
-      if head >= tape.length
-        tape.push blank
-      elsif head < 0
-        tape.unshift blank
-        @head += 1
-      end
-
-      true
-    end
-
-    def output
-      tape[0..-3].join.scan(/[01]{2}/)
-      tape[0..-3].join.scan(/[01]{2}/).map do |cs|
+    def decode(tape)
+      tape.take_while {|x| halt_symbol != x }.join.scan(/[01]{2}/).map do |cs|
         case cs
         when "11" then "1"
         when "10" then "0"
@@ -114,22 +80,6 @@ module TuringToy
         end
       end.join.to_i(2)
     end
-
-    def formatted_tape
-      lhs = head > 0 ? tape[0..head-1] : []
-      mhs = tape[head]
-      rhs = tape[head+1..-1]
-
-      buffer = StringIO.new("")
-      buffer.print "%2s: " % state
-      buffer.print head == 0 ? "" : " "
-      buffer.print lhs.join(" ")
-      buffer.print "[%s]" % mhs
-      buffer.print rhs.join(" ")
-      buffer.string
-    end
-
-    private
 
     def encode(n)
       n.to_i.to_s(2).chars.map do |c|
