@@ -12,6 +12,10 @@ module TuringToy
     R = 1
     L = -1
 
+    def name
+      "TuringToy::AddOneSmall"
+    end
+
     def initial_head_position(tape)
       tape.length - 1
     end
@@ -21,7 +25,7 @@ module TuringToy
     end
 
     def blank_symbol
-      0
+      "0"
     end
 
     def rules
