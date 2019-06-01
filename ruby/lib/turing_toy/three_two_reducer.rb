@@ -1,5 +1,11 @@
 module TuringToy
   # A meta-configuration that translates a (m, 3) machine into a (m, 2) one.
+  # Quite inefficient compared to a hand tuned one (see AddOneSmall), but gets
+  # the job done.
+  #
+  # Basic method is to split each symbol into a 2-bit word. Each rule is then
+  # split into a read phase that looks at both bits, then a write phase that
+  # moves back to the LSB then traverses either L or R 2 bits to the next word.
   class ThreeTwoReducer < Configuration
     L = -1
     R = 1
