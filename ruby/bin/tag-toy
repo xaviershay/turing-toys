@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+
+require 'turing_toy/divide_two_tag'
+require 'turing_toy/tag_machine'
+
+toy = ARGV[0]
+input = ARGV[1]
+
+config = TuringToy.const_get(toy)
+
+machine = TuringToy::TagMachine.new(config: config, input: input)
+
+def format(machine)
+  machine.tape
+end
+
+loop do
+  puts format(machine)
+  break unless machine.step
+end
+puts
+puts "Output: %s" % machine.output
