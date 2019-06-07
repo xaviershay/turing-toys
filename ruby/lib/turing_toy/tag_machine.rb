@@ -20,7 +20,7 @@ module TuringToy
         return false
       end
 
-      @tape = @tape[config.p..-1] + rule
+      @tape = tape.drop(2) + rule
 
       true
     end

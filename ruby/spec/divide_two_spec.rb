@@ -8,7 +8,7 @@ require 'turing_toy/tag_machine'
 shared_examples 'divide two machine' do
   it 'adds one to positive integers' do
    property_of {
-     range(0, 1000)
+     range(2, 100)
    }.check { |i|
      config = described_class
      machine = TuringToy::TagMachine.new(config: config, input: i)

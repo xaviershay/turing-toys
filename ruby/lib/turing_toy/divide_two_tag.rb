@@ -1,7 +1,7 @@
 require 'turing_toy/tag_configuration'
 
 module TuringToy
-  # Divides a non-negative integer by 2 (rounded down)
+  # Divides an integer >= 2 by 2 (rounded down)
   DivideTwoTag = TagConfiguration.new do
     def p
       2
@@ -9,13 +9,13 @@ module TuringToy
 
     def rules
       {
-        "a" => "b",
-        "b" => "c"
+        "a" => %w(b),
+        "b" => %w(c)
       }
     end
 
     def encode(n)
-      "aa" * n.to_i
+      "aa".chars * n.to_i
     end
 
     def decode(tape)

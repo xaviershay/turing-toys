@@ -13,7 +13,7 @@ config = TuringToy.const_get(toy)
 machine = TuringToy::TagMachine.new(config: config, input: input)
 
 def format(machine)
-  machine.tape
+  machine.tape.join
 end
 
 loop do
