@@ -3,6 +3,7 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 
 require 'turing_toy/divide_two_tag'
+require 'turing_toy/turing_tag'
 require 'turing_toy/tag_machine'
 
 toy = ARGV[0]
@@ -12,13 +13,24 @@ config = TuringToy.const_get(toy)
 
 machine = TuringToy::TagMachine.new(config: config, input: input)
 
-def format(machine)
-  machine.tape.join
+def format(machine, n)
+  tape = machine.tape
+
+  max_length = tape.map {|x| x.length }.max
+  n = 0
+
+  ("  " * n) + if max_length > 1
+    tape.join(' ')
+  else
+    tape.join
+  end
 end
 
+n = 0
 loop do
-  puts format(machine)
+  puts format(machine, n)
   break unless machine.step
+  n += 1
 end
 puts
 puts "Output: %s" % machine.output

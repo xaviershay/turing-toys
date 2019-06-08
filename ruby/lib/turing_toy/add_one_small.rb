@@ -46,14 +46,12 @@ module TuringToy
         },
         # MSB when LSB was 1. Skip over to next word (carry).
         2 => {
-          "0" => [halt_symbol], # Should never happen
           "1" => ["1", L, 0]
         },
 
         # LSB when incrementing
         3 => {
           "0" => ["1", L, 10],
-          "1" => [halt_symbol]
         },
 
         # MSB returning
@@ -63,7 +61,6 @@ module TuringToy
         },
         # LSB returning when MSB was 0.
         11 => {
-          "0" => [halt_symbol],
           "1" => ["1", R, 10]
         },
         # LSB returning when MSB was 1. Skip.

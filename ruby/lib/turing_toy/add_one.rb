@@ -11,12 +11,10 @@ module TuringToy
 
     def rules
       parse_rules <<-EOS
-        Q1: 0 1 R Q3
-        Q1: 1 0 L Q2
-        Q2: 0 1 R Q3
-        Q2: 1 0 L Q2
-        Q2: _ 1 R Q3
-        Q3: 0 0 R Q3
+        Q1: 0 1 R Q2
+        Q1: 1 0 L Q1
+        Q1: _ 1 R Q2
+        Q2: 0 0 R Q2
       EOS
     end
 

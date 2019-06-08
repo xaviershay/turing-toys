@@ -104,20 +104,19 @@ module TuringToy
           "1" => ["1", R, name_for(q, "Read LSB")]
         }
 
-        rule = state.fetch("0", [halt_symbol])
-        dir = dir_label(rule[1])
-        new_rules[name_for(q, "Read MSB (0)")] = {}
-        new_rules[name_for(q, "Read MSB (0)")]["1"] = [
-          expand(rule[0])[0],
-          R,
-          name_for(q, "LSB = #{rule[0]} #{dir} #{rule[2]}")
-        ]
+        rule = state.fetch("0", nil)
+        if rule
+          dir = dir_label(rule[1])
+          new_rules[name_for(q, "Read MSB (0)")] = {}
+          new_rules[name_for(q, "Read MSB (0)")]["1"] = [
+            expand(rule[0])[0],
+            R,
+            name_for(q, "LSB = #{rule[0]} #{dir} #{rule[2]}")
+          ]
+        end
 
-        rule = state.fetch("_", [halt_symbol])
-        if rule.length == 1
-          # HALT
-          new_rules[name_for(q, "Read MSB (0)")]["0"] = rule
-        else
+        rule = state.fetch("_", nil)
+        if rule
           new_rules[name_for(q, "Read MSB (0)")]["0"] = [
             expand(rule[0])[0],
             R,
@@ -125,13 +124,10 @@ module TuringToy
           ]
         end
 
-        rule = state.fetch("1", [halt_symbol])
-        dir = dir_label(rule[1])
-        new_rules[name_for(q, "Read MSB (1)")] = {}
-        if rule.length == 1
-          # HALT
-          new_rules[name_for(q, "Read MSB (1)")]["1"] = rule
-        else
+        rule = state.fetch("1", nil)
+        if rule
+          dir = dir_label(rule[1])
+          new_rules[name_for(q, "Read MSB (1)")] = {}
           new_rules[name_for(q, "Read MSB (1)")]["1"] = [
             expand(rule[0])[0],
             R,
