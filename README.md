@@ -22,3 +22,13 @@ A collection of fun turing machines and assorted other computers.
     c
 
     Output: 1
+
+Benchmarking
+------------
+
+    brew install imagemagick@6 
+    export LDFLAGS="-L/usr/local/opt/imagemagick@6/lib"                 
+    export CPPFLAGS="-I/usr/local/opt/imagemagick@6/include"
+    export PKG_CONFIG_PATH="/usr/local/opt/imagemagick@6/lib/pkgconfig"
+    bundle install
+    bundle exec ruby benchmark/*.rb
