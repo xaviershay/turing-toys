@@ -4,8 +4,15 @@ require 'turing_toy/add_one_small'
 module TuringToy
   # Converts an (m, 2) Turing machine into a P-2 tag system, as described in
   # "Universality of TAG Systems with P-2" (Cocke & Minsky, 1964).
-
+  #
   # https://cs.famaf.unc.edu.ar/~hoffmann/cc18/p15-cocke.pdf
+  #
+  # Rather than use the "x" symbol for unused, we instead here repeat the
+  # primary symbol in the word. This makes encoding this system into other
+  # systems easier down the line.
+  #
+  # The t0 rule doesn't match the paper, which was needed to get this to
+  # actually work - as far as I can tell this is a mistake in the paper.
   class TuringTag < Configuration
     def self.wrap(config)
       new(config)
@@ -155,23 +162,23 @@ module TuringToy
 
       if direction > 0 # R
         {
-          n["A"] => s == 0 ? n[%w(C x)] : n[%w(C x c x)],
-          n["a"] => n[%w(c x c x)],
+          n["A"] => s == 0 ? n[%w(C C)] : n[%w(C C c c)],
+          n["a"] => n[%w(c c c c)],
           n["B"] => n[%w(S)],
           n["b"] => n[%w(s)],
           n["C"] => n[%w(D1 D0)],
           n["c"] => n[%w(d1 d0)],
           n["S"] => n[%w(T1 T0)],
           n["s"] => n[%w(t1 t0)],
-          n["D1"] => n1[%w(A x)],
-          n["d1"] => n1[%w(a x)],
-          n["T1"] => n1[%w(B x)],
-          n["t1"] => n1[%w(b x)],
+          n["D1"] => n1[%w(A A)],
+          n["d1"] => n1[%w(a a)],
+          n["T1"] => n1[%w(B B)],
+          n["t1"] => n1[%w(b b)],
 
-          n["D0"] => n0[%w(x A x)],
-          n["d0"] => n0[%w(a x)], 
-          n["T0"] => n0[%w(B x)],
-          n["t0"] => n0[%w(b x)]
+          n["D0"] => n0[%w(A A A)],
+          n["d0"] => n0[%w(a a)], 
+          n["T0"] => n0[%w(B B)],
+          n["t0"] => n0[%w(b b)]
         }
       else
         {
@@ -183,15 +190,15 @@ module TuringToy
           n["c"] => n[%w(d1 d0)],
           n["S"] => n[%w(T1 T0)],
           n["s"] => n[%w(t1 t0)],
-          n["D1"] => n1[%w(A x)],
-          n["d1"] => n1[%w(a x)],
-          n["T1"] => n1[%w(B x)],
-          n["t1"] => n1[%w(b x)],
+          n["D1"] => n1[%w(A A)],
+          n["d1"] => n1[%w(a a)],
+          n["T1"] => n1[%w(B B)],
+          n["t1"] => n1[%w(b b)],
 
-          n["D0"] => n0[%w(x A x)],
-          n["d0"] => n0[%w(a x)],
-          n["T0"] => n0[%w(B x)],
-          n["t0"] => n0[%w(b x)]
+          n["D0"] => n0[%w(A A A)],
+          n["d0"] => n0[%w(a a)],
+          n["T0"] => n0[%w(B B)],
+          n["t0"] => n0[%w(b b)]
         }
       end
     end

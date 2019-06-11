@@ -6,7 +6,8 @@ require 'turing_toy'
 require 'turing_toy/turing_machine'
 
 module TuringToy
-  TestRogozhin218 = Rogozhin218.wrap(AddOneTagged)
+  #TestRogozhin218 = Rogozhin218.wrap(AddOneTagged)
+  TestRogozhin218 = Rogozhin218.wrap(DivideTwoTag)
 end
 
 toy = ARGV[0]
