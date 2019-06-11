@@ -2,8 +2,8 @@
 
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 
-require 'turing_toy/divide_two_tag'
-require 'turing_toy/turing_tag'
+require 'turing_toy'
+
 require 'turing_toy/tag_machine'
 
 toy = ARGV[0]
@@ -32,5 +32,6 @@ loop do
   break unless machine.step
   n += 1
 end
+puts format(machine, n)
 puts
 puts "Output: %s" % machine.output

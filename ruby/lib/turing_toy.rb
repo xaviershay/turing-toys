@@ -1,3 +1,6 @@
 require 'turing_toy/add_one'
 require 'turing_toy/add_one_small'
 require 'turing_toy/add_one_reduced'
+require 'turing_toy/add_one_tagged'
+require 'turing_toy/divide_two_tag'
+require 'turing_toy/rogozhin218'

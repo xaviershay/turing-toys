@@ -9,13 +9,21 @@ module TuringToy
 
     def rules
       {
+        "A" => %w(B),
         "a" => %w(b),
+        "B" => %w(c c c),
         "b" => %w(c)
       }
     end
 
+    def halt_symbol
+      "c"
+    end
+
     def encode(n)
-      "aa".chars * n.to_i
+      x = "aa".chars * n.to_i
+      x[0] = "A" if x.length > 0
+      x
     end
 
     def decode(tape)
