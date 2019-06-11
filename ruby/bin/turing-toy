@@ -34,7 +34,7 @@ def format(machine)
 end
 
 loop do
-  #puts format(machine)
+  puts format(machine)
   break unless machine.step
 end
 puts
