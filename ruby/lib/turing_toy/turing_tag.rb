@@ -97,7 +97,7 @@ module TuringToy
         end
       }
 
-      l[%w(A x) + (%w(a x) * m) + %w(B x) + (%w(b x) * n)]
+      l[%w(A A) + (%w(a a) * m) + %w(B B) + (%w(b b) * n)]
     end
 
     # TODO: Delegate to wrapped config
@@ -106,11 +106,17 @@ module TuringToy
     end
 
     def decode(tape)
-      return if tape[0][0] != "A"
+      fixed_tape = tape
+
+      if tape[0][0] == "a" && !rules[tape[0]]
+        fixed_tape = %w(A a) + tape
+      end
+
+      return if fixed_tape[0][0] != "A"
 
       m = 0
       n = 0
-      tape.each_slice(2) do |x|
+      fixed_tape.each_slice(2) do |x|
         case x[0][0]
         when "a"
           m += 1
@@ -218,22 +224,22 @@ module TuringToy
       }
 
       {
-        n["A"] => s == 0 ? n[%w(C x)] : n[%w(C x c x)],
-        n["a"] => n[%w(c x c x)],
+        n["A"] => s == 0 ? n[%w(C C)] : n[%w(C C c c)],
+        n["a"] => n[%w(c c c c)],
         n["B"] => n[%w(S)],
         n["b"] => n[%w(s)],
         n["C"] => n[%w(D1 D0)],
         n["c"] => n[%w(d1 d0)],
         n["S"] => n[%w(T1 T0)],
         n["s"] => n[%w(t1 t0)],
-        n["D1"] => n[%w(A x)], # TODO: State change to Q10
-        n["d1"] => n[%w(a x)], # TODO: State change to Q10
-        n["T1"] => n[%w(B x)], # TODO: State change to Q10
-        n["t1"] => n[%w(b x)], # TODO: State change to Q10
+        n["D1"] => n[%w(A A)], # TODO: State change to Q10
+        n["d1"] => n[%w(a a)], # TODO: State change to Q10
+        n["T1"] => n[%w(B B)], # TODO: State change to Q10
+        n["t1"] => n[%w(b b)], # TODO: State change to Q10
 
-        n["D0"] => n[%w(x A x)], # TODO: State change to Q11
-        n["d0"] => n[%w(a x)], # TODO: State change to Q11
-        n["T0"] => n[%w(B x)], # TODO: State change to Q11
+        n["D0"] => n[%w(A A A)], # TODO: State change to Q11
+        n["d0"] => n[%w(a a)], # TODO: State change to Q11
+        n["T0"] => n[%w(B B)], # TODO: State change to Q11
         n["t0"] => n[%w(b)] # TODO: State change to Q11
       }
     end
@@ -261,15 +267,15 @@ module TuringToy
         n["c"] => n[%w(d1 d0)],
         n["S"] => n[%w(T1 T0)],
         n["s"] => n[%w(t1 t0)],
-        n["D1"] => n[%w(A x)], # TODO: State change to Q10
-        n["d1"] => n[%w(a x)], # TODO: State change to Q10
-        n["T1"] => n[%w(B x)], # TODO: State change to Q10
-        n["t1"] => n[%w(b x)], # TODO: State change to Q10
+        n["D1"] => n[%w(A A)], # TODO: State change to Q10
+        n["d1"] => n[%w(a a)], # TODO: State change to Q10
+        n["T1"] => n[%w(B B)], # TODO: State change to Q10
+        n["t1"] => n[%w(b b)], # TODO: State change to Q10
 
-        n["D0"] => n[%w(x A x)], # TODO: State change to Q11
-        n["d0"] => n[%w(a x)], # TODO: State change to Q11  TODO maybe drop x here?
-        n["T0"] => n[%w(B x)], # TODO: State change to Q11
-        n["t0"] => n[%w(b x)] # TODO: State change to Q11
+        n["D0"] => n[%w(A A A)], # TODO: State change to Q11
+        n["d0"] => n[%w(a a)], # TODO: State change to Q11  TODO maybe drop x here?
+        n["T0"] => n[%w(B B)], # TODO: State change to Q11
+        n["t0"] => n[%w(b b)] # TODO: State change to Q11
       }
     end
   end

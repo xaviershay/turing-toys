@@ -75,9 +75,14 @@ module TuringToy
     end
 
     def decode(tape)
-      remaining_tape = tape.drop_while {|x| x != "c" }.drop(1)
+      remaining_tape = tape.drop_while {|x| x != "c" }
       reverse = tags.map {|k, v| [v[:n], k] }.to_h
-      decoded = split(remaining_tape[0..-2], "c").map(&:length).map {|x| reverse.fetch(x) }
+      remaining_tape = remaining_tape[0..-2].drop(1)
+      if remaining_tape.length > 0
+        decoded = split(remaining_tape, "c").map(&:length).map {|x| reverse.fetch(x) }
+      else
+        decoded = %w()
+      end
 
       config.decode(decoded)
     end
@@ -118,7 +123,7 @@ module TuringToy
 
         tags.each do |(k, v)|
           if v[:production]
-            tokens = v[:production].map {|x| tags.fetch(x).fetch(:n) + 1 }
+            tokens = v[:production].map {|x| tags.fetch(x, last).fetch(:n) + 1 }
             tokens[0] -= 1
             v[:p] = %w(b b) + tokens.map {|x| %w(1) * x }.reverse.reduce {|x, y| x + %w(b) + y }
           else
@@ -131,7 +136,6 @@ module TuringToy
 
     def encode(input)
       lhs = tags.values.sort_by {|x| x[:n] }.map {|x| x.fetch(:p) }.reverse.reduce(&:+) + %w(b b)
-
       initial_tape = config.encode(input)
       rhs = initial_tape.flat_map {|x| (%w(1) * tags.fetch(x).fetch(:n)) + %w(c) }
 

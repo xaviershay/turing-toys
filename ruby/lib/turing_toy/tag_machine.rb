@@ -16,11 +16,12 @@ module TuringToy
       x = tape[0]
       rule = config.rules.fetch(x, nil)
 
+      @tape = tape.drop(2)
       unless rule
         return false
       end
 
-      @tape = tape.drop(2) + rule
+      @tape = tape + rule
 
       true
     end
