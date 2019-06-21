@@ -26,7 +26,7 @@ module TuringToy
       tape.length - 2
     end
 
-    def decode(tape)
+    def decode(tape, d = 100)
       tape.reject {|x| [blank_symbol, halt_symbol].include?(x) }.join.to_i(2)
     end
 

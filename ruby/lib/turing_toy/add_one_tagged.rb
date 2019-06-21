@@ -3,5 +3,5 @@ require 'turing_toy/turing_tag'
 require 'turing_toy/three_two_reducer'
 
 module TuringToy
-  AddOneTagged = TuringTag.wrap(ThreeTwoReducer.wrap(AddOne))
+  AddOneTagged = TuringTag.wrap(AddOneSmall)
 end

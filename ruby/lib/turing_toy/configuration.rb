@@ -32,6 +32,10 @@ module TuringToy
       raise NotImplementedError
     end
 
+    def cycled?(*)
+      true
+    end
+
     def name
     end
 

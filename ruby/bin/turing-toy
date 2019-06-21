@@ -5,11 +5,6 @@ $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require 'turing_toy'
 require 'turing_toy/turing_machine'
 
-module TuringToy
-  TestRogozhin218 = Rogozhin218.wrap(TuringTag.wrap(AddOneSmall))
-  #TestRogozhin218 = Rogozhin218.wrap(DivideTwoTag)
-end
-
 toy = ARGV[0]
 input = ARGV[1]
 
@@ -33,9 +28,12 @@ def format(machine)
   buffer.string
 end
 
+puts format(machine)
+
 loop do
+  halted = !machine.step
   puts format(machine)
-  break unless machine.step
+  break if halted
 end
 puts
 puts "Output: %s" % machine.output

@@ -71,7 +71,7 @@ module TuringToy
       }
     end
 
-    def decode(tape)
+    def decode(tape, d = 100)
       tape.take_while {|x| halt_symbol != x }.join.scan(/[01]{2}/).map do |cs|
         case cs
         when "11" then "1"

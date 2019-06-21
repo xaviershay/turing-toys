@@ -9,6 +9,10 @@ module TuringToy
       @state = config.initial_state
     end
 
+    def cycled?(d = 0)
+      config.cycled?(state, tape, @head, d)
+    end
+
     def run
       while step
       end
@@ -38,8 +42,8 @@ module TuringToy
       true
     end
 
-    def output
-      config.decode(tape)
+    def output(d = 100)
+      config.decode(tape, d)
     end
   end
 end

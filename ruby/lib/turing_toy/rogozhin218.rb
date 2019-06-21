@@ -74,7 +74,11 @@ module TuringToy
       super
     end
 
-    def decode(tape)
+    def cycled?(state, tape, head, d = 0)
+      state == 2 && tape[head] == "cL1"
+    end
+
+    def decode(tape, d = 4)
       remaining_tape = tape.drop_while {|x| x != "c" }
       reverse = tags.map {|k, v| [v[:n], k] }.to_h
       remaining_tape = remaining_tape[0..-2].drop(1)
@@ -84,7 +88,11 @@ module TuringToy
         decoded = %w()
       end
 
-      config.decode(decoded)
+      if d > 0
+        config.decode(decoded) # TODO: , d - 1)
+      else
+        decoded
+      end
     end
 
     def split(arr, value = nil)
