@@ -14,14 +14,16 @@ A collection of fun turing machines and assorted other computers.
     Output: 6
 
     > bin/tag-toy DivideTwoTag 3
-    aaaaaa
-    aaaab
-    aabb
-    bbb
-    bc
+    Aaaaaa
+    aaaaB
+    aaBb
+    Bbb
+    bccc
+    ccc
     c
-
-    Output: 1
+    > bin/tag-toy DivideTwoTag 3 -d 1
+    3
+    1
 
 Benchmarking
 ------------
