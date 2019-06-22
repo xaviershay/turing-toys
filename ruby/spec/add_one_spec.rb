@@ -1,6 +1,4 @@
 require 'spec_helper'
-require 'rantly/rspec_extensions'
-require 'rantly/shrinks'
 
 require 'turing_toy/add_one'
 require 'turing_toy/add_one_small'
@@ -11,8 +9,8 @@ require 'turing_toy/turing_machine'
 require 'turing_toy/tag_machine'
 
 shared_examples 'add one machine' do
-  it 'adds one to positive integers' do
-    (0..5).each do |i|
+  (0..5).each do |i|
+    it "adds one to #{i}" do
       config = described_class
       instance = machine.new(config: config, input: i)
       instance.run

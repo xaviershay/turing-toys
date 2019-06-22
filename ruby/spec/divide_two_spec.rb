@@ -1,23 +1,30 @@
 require 'spec_helper'
-require 'rantly/rspec_extensions'
-require 'rantly/shrinks'
 
+require 'turing_toy'
 require 'turing_toy/divide_two_tag'
+require 'turing_toy/divide_two_rogozhin218'
 require 'turing_toy/tag_machine'
+require 'turing_toy/turing_machine'
 
 shared_examples 'divide two machine' do
-  it 'adds one to positive integers' do
-   property_of {
-     range(2, 100)
-   }.check { |i|
-     config = described_class
-     machine = TuringToy::TagMachine.new(config: config, input: i)
-     machine.run
-     expect(machine.output).to eq(i/2)
-   }
+  (2..5).each do |n|
+    it "divides #{n} by 2" do
+      config = described_class
+      instance = machine.new(config: config, input: n)
+      instance.run
+      expect(instance.output).to eq(n/2)
+    end
   end
 end
 
 describe TuringToy::DivideTwoTag do
+  let(:machine) { TuringToy::TagMachine }
+
+  it_behaves_like 'divide two machine'
+end
+
+describe TuringToy::DivideTwoRogozhin218 do
+  let(:machine) { TuringToy::TuringMachine }
+
   it_behaves_like 'divide two machine'
 end

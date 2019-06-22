@@ -28,6 +28,8 @@ A collection of fun turing machines and assorted other computers.
 Benchmarking
 ------------
 
+Add `benchmark-plot' to `Gemfile`, then:
+
     brew install imagemagick@6 
     export LDFLAGS="-L/usr/local/opt/imagemagick@6/lib"                 
     export CPPFLAGS="-I/usr/local/opt/imagemagick@6/include"

@@ -1,5 +1,7 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
+# Needs benchmark/plot added to Gemfile
+
 require 'turing_toy'
 require 'turing_toy/turing_machine'
 require 'turing_toy/tag_machine'

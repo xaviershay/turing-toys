@@ -74,11 +74,19 @@ module TuringToy
       super
     end
 
-    def cycled?(state, tape, head, d = 0)
-      state == 2 && tape[head] == "cL1"
+    def cycled?(tape, head, state)
+      state == 2 && tape[head] == "cL1" || super
     end
 
-    def decode(tape, d = 4)
+    def format2(tape, head, state)
+      deeper = if cycled?(tape, head, state)
+        config.format2(decode(tape))
+      end
+
+      super + [deeper].flatten.compact
+    end
+
+    def decode(tape)
       remaining_tape = tape.drop_while {|x| x != "c" }
       reverse = tags.map {|k, v| [v[:n], k] }.to_h
       remaining_tape = remaining_tape[0..-2].drop(1)
@@ -88,11 +96,7 @@ module TuringToy
         decoded = %w()
       end
 
-      if d > 0
-        config.decode(decoded, d - 1)
-      else
-        decoded.join(' ')
-      end
+      decoded
     end
 
     def split(arr, value = nil)
