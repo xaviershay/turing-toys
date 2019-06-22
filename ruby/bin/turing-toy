@@ -5,6 +5,20 @@ $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require 'turing_toy'
 require 'turing_toy/turing_machine'
 
+require 'optparse'
+
+options = {depth: 0, cycle: 0}
+OptionParser.new do |opts|
+  opts.banner = "Usage: turing-toy machine input [options]"
+
+  opts.on("-d DEPTH", "--depth DEPTH", "How deeply to unwrap the machine output") do |d|
+    options[:depth] = d.to_i
+  end
+  opts.on("-c CYCLE", "--cycle CYCLE", "Which cycle to display output on (must be >= depth)") do |c|
+    options[:cycle] = c.to_i
+  end
+end.parse!
+
 toy = ARGV[0]
 input = ARGV[1]
 
@@ -28,12 +42,14 @@ def format(machine)
   buffer.string
 end
 
-puts format(machine)
-
+n = 0
+depth = options.fetch(:depth)
+cycle = options.fetch(:cycle)
 loop do
-  halted = !machine.step
-  puts format(machine)
-  break if halted
+  formatted = config.format2(machine.tape, machine.head, machine.state)
+  if formatted[cycle] && formatted[depth]
+    puts formatted[depth]
+  end
+  break unless machine.step
+  n += 1
 end
-puts
-puts "Output: %s" % machine.output

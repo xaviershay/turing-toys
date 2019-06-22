@@ -36,15 +36,23 @@ module TuringToy
       "0"
     end
 
-    def decode(tape, d = 100)
-      tape.take_while {|x| halt_symbol != x }.join.scan(/[01]{2}/).map do |cs|
+    def decode(tape, head)
+      if tape.length % 2 == 1
+        if head == 0
+          tape = [blank_symbol] + tape
+        else
+          tape = tape + [blank_symbol]
+        end
+      end
+      tape.join.scan(/[01!]{2}/).map do |cs|
         case cs
         when "11" then "1"
         when "10" then "0"
         when "00" then " "
+        when "!0" then config.halt_symbol
         else raise "Unexpected word: #{cs}"
         end
-      end.join.to_i(2)
+      end
     end
 
     def encode(n)
@@ -55,6 +63,26 @@ module TuringToy
         else raise "Unknown char: #{c}"
         end
       end.join.chars
+    end
+
+    def cycled?(tape, head, state)
+      !!(state =~ /Read LSB/ || tape[head] == halt_symbol) 
+    end
+
+    def format2(tape, head, state)
+      deeper = [
+        if cycled?(tape, head, state)
+          t = decode(tape, head) rescue nil
+          if t
+            s = state.split(' ')[0] # TODO
+            h = head / 2
+            f = config.format2(t, h, s)
+            f
+          end
+        end
+      ].compact.flatten
+
+      super + deeper
     end
 
     protected

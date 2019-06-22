@@ -28,8 +28,8 @@ module TuringToy
       raise NotImplementedError
     end
 
-    def cycled?(*)
-      true
+    def cycled?(tape, head, state)
+      tape[head] == halt_symbol || !rules.fetch(state, {}).fetch(tape[head], nil)
     end
 
     def name
@@ -40,12 +40,14 @@ module TuringToy
     end
 
     def format2(tape, head, state)
+      max_state_length = rules.keys.map(&:to_s).map(&:length).max
+
       lhs = head > 0 ? tape[0..head-1] : []
       mhs = tape[head]
       rhs = tape[head+1..-1] || []
 
       buffer = StringIO.new("")
-      buffer.print state.to_s + ": "
+      buffer.print "%#{max_state_length}s: " % state.to_s
       buffer.print head == 0 ? "" : " "
       buffer.print lhs.join(" ")
       buffer.print "[%s]" % mhs

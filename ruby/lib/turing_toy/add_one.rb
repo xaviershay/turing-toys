@@ -35,6 +35,16 @@ module TuringToy
       # formatted.
       [blank_symbol] + n.to_i.to_s(2).chars + [blank_symbol]
     end
+
+    def format2(tape, head, state)
+      deeper = [
+        if cycled?(tape, head, state)
+          decode(tape) rescue nil
+        end
+      ].compact
+
+      super + deeper
+    end
   end
 end
 

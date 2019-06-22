@@ -21,56 +21,52 @@ module TuringToy
     end
 
     def initial_state
-      0
+      "0"
     end
 
     def blank_symbol
       "0"
     end
 
-    def cycled?(tape, head, state)
-      state == "11" && tape[head] == "0"
-    end
-
     def rules
       {
-        0 => {
+        "0" => {
           # If LSB == 1, then word is a 1. Set it 0, skip over the MSB (we can
           # assume MSB is already a 1, since 01 is not a valid), then loop.
           # word.)
-          "1" => ["0", L, 2],
-          "0" => ["0", L, 1]
+          "1" => ["0", L, "2"],
+          "0" => ["0", L, "1"]
         },
         # Check MSB when LSB was 0
-        1 => {
+        "1" => {
           # Blank, we're done.
-          "0" => ["1", R, 3],
+          "0" => ["1", R, "3"],
           # 0. Set to 1 and we're done.
-          "1" => ["1", R, 3]
+          "1" => ["1", R, "3"]
         },
         # MSB when LSB was 1. Skip over to next word (carry).
-        2 => {
-          "1" => ["1", L, 0]
+        "2" => {
+          "1" => ["1", L, "0"]
         },
 
         # LSB when incrementing
-        3 => {
-          "0" => ["1", L, 10],
+        "3" => {
+          "0" => ["1", L, "10"],
         },
 
         # MSB returning
-        10 => {
-          "0" => ["0", R, 11],
-          "1" => ["1", R, 12]
+        "10" => {
+          "0" => ["0", R, "11"],
+          "1" => ["1", R, "12"]
         },
         # LSB returning when MSB was 0.
-        11 => {
-          "1" => ["1", R, 10]
+        "11" => {
+          "1" => ["1", R, "10"]
         },
         # LSB returning when MSB was 1. Skip.
-        12 => {
-          "0" => ["0", R, 10],
-          "1" => ["1", R, 10]
+        "12" => {
+          "0" => ["0", R, "10"],
+          "1" => ["1", R, "10"]
         }
       }
     end

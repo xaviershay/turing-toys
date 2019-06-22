@@ -42,8 +42,8 @@ module TuringToy
       true
     end
 
-    def output(d = 100)
-      config.decode(tape, d)
+    def output
+      config.format2(tape, head, state)[-1]
     end
   end
 end

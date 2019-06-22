@@ -106,13 +106,7 @@ module TuringToy
     end
 
     def cycled?(tape, d = 0)
-      fixed_tape = tape
-
-#       if %w(a B).include?(tape[0][0]) && !rules[tape[0]]
-#         fixed_tape = %w(A A) + tape
-#       end
-
-      return fixed_tape[0][0] == "A"
+      tape[0][0] == "A"
     end
 
     def format2(tape)
