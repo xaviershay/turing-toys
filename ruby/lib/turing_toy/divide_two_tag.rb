@@ -8,10 +8,6 @@ module TuringToy
     end
 
     def rules
-      #{
-      #  "a" => %w(b),
-      #  "b" => %w(c)
-      #}
       {
         "A" => %w(B),
         "a" => %w(b),
