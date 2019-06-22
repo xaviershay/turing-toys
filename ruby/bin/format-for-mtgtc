@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+
+require 'turing_toy'
+require 'turing_toy/turing_machine'
+
+toy = ARGV[0]
+input = ARGV[1]
+
+config = TuringToy.const_get(toy)
+machine = TuringToy::TuringMachine.new(config: config, input: input)
+
+mapping = {
+  "1"   => "a",
+  "1R"  => "b",
+  "1L"  => "c",
+  "1R1" => "d",
+  "1L1" => "e",
+  "b"   => "f",
+  "bR"  => "g",
+  "bL"  => "h",
+  "bR1" => "i",
+  "bL1" => "j",
+  "b2"  => "k",
+  "b3"  => "l",
+  "c"   => "m",
+  "cR"  => "n",
+  "cL"  => "o",
+  "cR1" => "p",
+  "cL1" => "r",
+  "c2"  => "s"
+}
+new_tape = machine.tape.map {|x| mapping.fetch(x) }
+
+print new_tape[0..machine.head-1].join
+print "["
+print new_tape[machine.head]
+print "]"
+print new_tape[machine.head+1..-1].join
+puts

@@ -3,7 +3,6 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 
 require 'turing_toy'
-
 require 'turing_toy/tag_machine'
 
 require 'optparse'
