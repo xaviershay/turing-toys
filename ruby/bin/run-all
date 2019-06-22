@@ -1,0 +1,16 @@
+#/bin/bash
+
+set -ex
+
+bin/turing-toy AddOne 0
+bin/turing-toy AddOneSmall 0
+bin/turing-toy AddOneSmall 0 -d 1
+bin/turing-toy AddOneReduced 0
+bin/turing-toy AddOneReduced 0 -d 1
+bin/turing-toy AddOneReduced 0 -d 2
+bin/tag-toy AddOneTagged 0
+bin/tag-toy AddOneTagged 0 -d 0 -c 1
+bin/tag-toy AddOneTagged 0 -d 1
+bin/tag-toy AddOneTagged 0 -d 2
+bin/tag-toy DivideTwoTag 2
+bin/tag-toy DivideTwoTag 2 -d 1
