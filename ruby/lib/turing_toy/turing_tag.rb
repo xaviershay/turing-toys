@@ -115,7 +115,7 @@ module TuringToy
       return fixed_tape[0][0] == "A"
     end
 
-    def format(tape)
+    def format2(tape)
       max_length = tape.map {|x| x.length }.max
       n = 0
 
@@ -154,33 +154,6 @@ module TuringToy
       end
 
       [formatted] + deeper
-    end
-
-    def decode(tape, d = 100)
-      return unless cycled?(tape)
-
-      m = 0
-      n = 0
-      tape.each_slice(2) do |x|
-        case x[0][0]
-        when "a"
-          m += 1
-        when "b"
-          n += 1
-        end
-      end
-
-      head = reverse_alphabet.fetch(tape[0].split("/")[2])
-      tape = ""
-      tape << m.to_s(2) if m > 0
-      tape << head.to_s
-      tape << n.to_s(2).reverse if n > 0
-
-      tape = tape.chars.map {|x|
-        alphabet.fetch(x.to_i)
-      }
-
-      wrapped.decode(tape, d - 1)
     end
 
     def rules_for_state2(state_name, branch, s, direction, next_state_name)

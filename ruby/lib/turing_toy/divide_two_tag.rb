@@ -30,8 +30,27 @@ module TuringToy
       x
     end
 
-    def decode(tape)
-      tape.length
+    def cycled?(tape)
+      tape[0] == halt_symbol
+    end
+
+    def format2(tape)
+      max_length = tape.map {|x| x.length }.max || 0
+      n = 0
+
+      formatted = ("  " * n) + if max_length > 1
+        tape.join(' ')
+      else
+        tape.join
+      end
+
+      deeper = if cycled?(tape)
+        [tape.length]
+      else
+        []
+      end
+
+      [formatted] + deeper
     end
   end
 end

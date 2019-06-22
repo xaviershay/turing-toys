@@ -31,10 +31,14 @@ n = 0
 depth = options.fetch(:depth)
 cycle = options.fetch(:cycle)
 loop do
-  formatted = config.format(machine.tape)
+  formatted = config.format2(machine.tape)
   if formatted[cycle] && formatted[depth]
     puts formatted[depth]
   end
   break unless machine.step
   n += 1
+end
+formatted = config.format2(machine.tape)
+if formatted[cycle] && formatted[depth]
+  puts formatted[depth]
 end

@@ -8,7 +8,7 @@ module TuringToy
       raise NotImplementedError
     end
 
-    def decode(input)
+    def format2(tape)
       raise NotImplementedError
     end
 

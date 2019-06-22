@@ -1,10 +1,11 @@
 module TuringToy
   class TagMachine
-    attr_reader :config, :tape
+    attr_reader :config, :tape, :last_output
 
     def initialize(config:, input:)
       @config = config
       @tape = config.encode(input)
+      @last_output = [0, nil]
     end
 
     def run
@@ -17,6 +18,12 @@ module TuringToy
       rule = config.rules.fetch(x, nil)
 
       @tape = tape.drop(2)
+
+      f = config.format2(@tape)
+      if f.length >= last_output[0]
+        @last_output = [f.length, f[-1]]
+      end
+
       unless rule
         return false
       end
@@ -27,7 +34,7 @@ module TuringToy
     end
 
     def output
-      config.decode(tape)
+      @last_output[1]
     end
   end
 end
