@@ -1,9 +1,5 @@
 module TuringToy
-  class Configuration
-    def initialize(&block)
-      instance_exec(&block)
-    end
-
+  class Base
     def rules
       raise NotImplementedError
     end
@@ -42,6 +38,28 @@ module TuringToy
     def inspect
       name ? name : super
     end
+
+    def format2(tape, head, state)
+      lhs = head > 0 ? tape[0..head-1] : []
+      mhs = tape[head]
+      rhs = tape[head+1..-1] || []
+
+      buffer = StringIO.new("")
+      buffer.print state.to_s + ": "
+      buffer.print head == 0 ? "" : " "
+      buffer.print lhs.join(" ")
+      buffer.print "[%s]" % mhs
+      buffer.print rhs.join(" ")
+
+      [buffer.string]
+    end
+  end
+
+  class Configuration < Base
+    def initialize(&block)
+      instance_exec(&block)
+    end
+
 
     protected
 

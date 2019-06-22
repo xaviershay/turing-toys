@@ -89,9 +89,9 @@ module TuringToy
       end
 
       if d > 0
-        config.decode(decoded) # TODO: , d - 1)
+        config.decode(decoded, d - 1)
       else
-        decoded
+        decoded.join(' ')
       end
     end
 

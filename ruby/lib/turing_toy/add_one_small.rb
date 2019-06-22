@@ -28,6 +28,10 @@ module TuringToy
       "0"
     end
 
+    def cycled?(tape, head, state)
+      state == "11" && tape[head] == "0"
+    end
+
     def rules
       {
         0 => {
@@ -69,6 +73,16 @@ module TuringToy
           "1" => ["1", R, 10]
         }
       }
+    end
+
+    def format2(tape, head, state)
+      deeper = [
+        if cycled?(tape, head, state)
+          decode(tape) rescue nil
+        end
+      ].compact
+
+      super + deeper
     end
 
     def decode(tape, d = 100)

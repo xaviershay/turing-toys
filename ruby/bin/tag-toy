@@ -6,6 +6,20 @@ require 'turing_toy'
 
 require 'turing_toy/tag_machine'
 
+require 'optparse'
+
+options = {depth: 0, cycle: 0}
+OptionParser.new do |opts|
+  opts.banner = "Usage: turing-toy machine input [options]"
+
+  opts.on("-d DEPTH", "--depth DEPTH", "How deeply to unwrap the machine output") do |d|
+    options[:depth] = d.to_i
+  end
+  opts.on("-c CYCLE", "--cycle CYCLE", "Which cycle to display output on (must be >= depth)") do |c|
+    options[:cycle] = c.to_i
+  end
+end.parse!
+
 toy = ARGV[0]
 input = ARGV[1]
 
@@ -13,25 +27,14 @@ config = TuringToy.const_get(toy)
 
 machine = TuringToy::TagMachine.new(config: config, input: input)
 
-def format(machine, n)
-  tape = machine.tape
-
-  max_length = tape.map {|x| x.length }.max
-  n = 0
-
-  ("  " * n) + if max_length > 1
-    tape.join(' ')
-  else
-    tape.join
-  end
-end
-
 n = 0
+depth = options.fetch(:depth)
+cycle = options.fetch(:cycle)
 loop do
-  puts format(machine, n)
+  formatted = config.format(machine.tape)
+  if formatted[cycle] && formatted[depth]
+    puts formatted[depth]
+  end
   break unless machine.step
   n += 1
 end
-puts format(machine, n)
-puts
-puts "Output: %s" % machine.output
