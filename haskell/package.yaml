@@ -1,0 +1,43 @@
+name:                mtgtc
+version:             0.1
+github:              "xaviershay/turing-toys"
+license:             BSD3
+author:              "Xavier Shay"
+maintainer:          "contact@xaviershay.com"
+copyright:           "2019 Xavier Shay"
+
+synopsis: "Turing Toys"
+category: "Games"
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/xaviershay/turing-toys>
+
+custom-setup:
+  dependencies:
+    - base >= 4.7 && < 5
+    - Cabal
+    - directory
+    - filepath
+
+dependencies:
+  - base >= 4.7 && < 5
+  - containers
+  - hashable
+  - lens
+  - mtl
+  - unordered-containers
+  - parsec
+  - split
+
+executables:
+  mtgtc:
+    main:                Main.hs
+    source-dirs:         mtgtc
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - dovin
