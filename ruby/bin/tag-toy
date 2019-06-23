@@ -7,7 +7,7 @@ require 'turing_toy/tag_machine'
 
 require 'optparse'
 
-options = {depth: 0, cycle: 0}
+options = {depth: 0, cycle: 0, rules: false}
 OptionParser.new do |opts|
   opts.banner = "Usage: turing-toy machine input [options]"
 
@@ -17,12 +17,22 @@ OptionParser.new do |opts|
   opts.on("-c CYCLE", "--cycle CYCLE", "Which cycle to display output on (must be >= depth)") do |c|
     options[:cycle] = c.to_i
   end
+  opts.on("-r", "--rules", "Print rules and exit") do |r|
+    options[:rules] = true
+  end
 end.parse!
 
 toy = ARGV[0]
 input = ARGV[1]
 
 config = TuringToy.const_get(toy)
+
+if options.fetch(:rules)
+  config.rules.each do |s, p|
+    puts "%s: %s" % [s, p.join(' ')]
+  end
+  exit
+end
 
 machine = TuringToy::TagMachine.new(config: config, input: input)
 

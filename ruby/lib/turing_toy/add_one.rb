@@ -11,15 +11,15 @@ module TuringToy
 
     def rules
       parse_rules <<-EOS
-        Q1: 0 1 R Q2
-        Q1: 1 0 L Q1
-        Q1: _ 1 R Q2
-        Q2: 0 0 R Q2
+        A: 0 1 R B
+        A: 1 0 L A
+        A: _ 1 R B
+        B: 0 0 R B
       EOS
     end
 
     def initial_state
-      "Q1"
+      "A"
     end
 
     def initial_head_position(tape)

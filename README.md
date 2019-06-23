@@ -10,7 +10,7 @@ A collection of fun turing machines and assorted other computers.
     Q2:  _ 1 1[0]_
     Q2:  _ 1 1 0[_]
     Q2:  _ 1 1 0[!]
-    > bin/turing-toy AddOne 5 | tail -n-1
+    > bin/turing-toy AddOne 5 -d 1 | tail -n-1
     6
 
     > bin/tag-toy DivideTwoTag 3
