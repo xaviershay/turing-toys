@@ -24,6 +24,17 @@ A collection of fun turing machines and assorted other computers.
     > bin/tag-toy DivideTwoTag 3 -d 1 | tail -n-1
     1
 
+A more complicated beast can be found in the `haskell` subdirectory: _Magic: The
+Gathering: The Computer._ It's an impletation of [this
+paper](https://arxiv.org/abs/1904.09828) showing that MtG is turing complete.
+
+    TAPE=$(ruby/bin/format-for-mtgtc DivideTwoRogozhin218 2)
+    cd haskell
+    stack build
+    stack exec mtgtc -- "$TAPE"
+
+You might be waiting a while...
+
 Benchmarking
 ------------
 

@@ -6,16 +6,11 @@ import Dovin.Monad
 
 import qualified MTGTC
 
+import System.Environment (getArgs)
 import System.Exit (exitFailure, exitSuccess)
 
 main = do
-  --let tape = "[s]ssr"
-  --let tape = "[p]fr"
-  --let tape =  "crrffafafaffaffaaaaaaafaaaaaf[f]amamamc"
-  --let tape = "rrffafafaf[f]amamam"
-  let tape = "rrffaafaf[f]amam"
-  let tape = "rrffaaaaaaaaaaaffaaaaaaaaaaaafaaaaaaaaaaaafaaaaaaaaaaaffaaaaaaaaaffaaaaaf[f]amaaamaaamaaam"
-  --let tape = "[s]"
+  (tape:_) <- getArgs
 
   let (e, initialBoard, _) = runMonad emptyBoard (MTGTC.setup tape)
   putStrLn . myFormatter $ initialBoard
